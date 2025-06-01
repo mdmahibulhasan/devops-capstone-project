@@ -1,6 +1,6 @@
 ---
-name: Create Product Backlog
-about: Each issue will become a product backlog
+name: User Story
+about: We will create User story from this template
 title: ''
 labels: ''
 assignees: ''
