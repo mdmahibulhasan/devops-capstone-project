@@ -67,6 +67,24 @@ def create_accounts():
 ######################################################################
 # READ AN ACCOUNT
 ######################################################################
+@app.route("/accounts/<int:account_id>", methods=["GET"])
+def get_accounts(account_id):
+    """
+   Gets an Account
+    """
+    app.logger.info("Request to get an Account")
+
+    account = Account.find(account_id)
+
+    if account is None:
+        abort(status.HTTP_404_NOT_FOUND, f"Account with {account_id} not available")
+        
+    location_url = f"/accounts/account_id"  # Remove once get_accounts has been implemented
+    return make_response(
+        jsonify(account.serialize()), status.HTTP_200_OK, {"Location": location_url}
+    )
+
+
 
 # ... place you code here to READ an account ...
 
