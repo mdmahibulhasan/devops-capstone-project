@@ -77,11 +77,11 @@ def get_accounts(account_id):
     account = Account.find(account_id)
 
     if account is None:
-        abort(stats.HTTP_404_NOT_FOUND, f"Account with {account_id} not available")
+        abort(status.HTTP_404_NOT_FOUND, f"Account with {account_id} not available")
         
     location_url = f"/accounts/account_id"  # Remove once get_accounts has been implemented
     return make_response(
-        jsonify(account.serialize), status.HTTP_200_OK, {"Location": location_url}
+        jsonify(account.serialize()), status.HTTP_200_OK, {"Location": location_url}
     )
 
 
