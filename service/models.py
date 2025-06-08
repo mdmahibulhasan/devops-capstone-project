@@ -143,10 +143,4 @@ class Account(db.Model, PersistentBase):
         """
         logger.info("Processing name query for %s ...", name)
         return cls.query.filter(cls.name == name)
-    
-    @staticmethod
-    def find(account_id):
-        """Returns an accoutn based on Account id
-        """
-        logger.info("Processing account query for %s ...", account_id)
-        return Account.query.get(account_id)
+

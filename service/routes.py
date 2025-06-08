@@ -61,7 +61,15 @@ def create_accounts():
 # LIST ALL ACCOUNTS
 ######################################################################
 
-# ... place you code here to LIST accounts ...
+@app.route("/accounts", methods=["GET"])
+def list_accounts():
+    accounts = Account().all()
+    data = [account.serialize() for account in accounts]
+    
+    location_url = "/accounts"
+    return make_response(
+        jsonify(data), status.HTTP_200_OK, {"Location": location_url}
+    )
 
 
 ######################################################################
@@ -74,7 +82,7 @@ def get_accounts(account_id):
     """
     app.logger.info("Request to get an Account")
 
-    account = Account.find(account_id)
+    account = Account().find(account_id)
 
     if account is None:
         abort(status.HTTP_404_NOT_FOUND, f"Account with {account_id} not available")
