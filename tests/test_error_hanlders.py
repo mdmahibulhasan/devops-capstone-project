@@ -56,4 +56,8 @@ class TestErrorHanlders(TestCase):
         # POST is allowed, but PUT without an account ID is not (on /accounts)
         response = self.client.put(BASE_URL)  # PUT without /<id> will trigger 405
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+                # POST is allowed, but PUT without an account ID is not (on /accounts)
+        response = self.client.delete(BASE_URL)  # PUT without /<id> will trigger 405
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
        
