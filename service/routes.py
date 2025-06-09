@@ -65,7 +65,7 @@ def create_accounts():
 @app.route("/accounts", methods=["GET"])
 def list_accounts():
     accounts = Account().all()
-    data = [account.serialize() for account in accounts]  
+    data = [account.serialize() for account in accounts] 
     location_url = "/accounts"
     return make_response(
         jsonify(data), status.HTTP_200_OK, {"Location": location_url}
@@ -85,7 +85,7 @@ def get_accounts(account_id):
     account = Account.find(account_id)
     if account is None:
         abort(status.HTTP_404_NOT_FOUND, f"Account with {account_id} not available")
-    location_url = f"/accounts/{account_id}" # Remove once get_accounts has been implemented
+    location_url = f"/accounts/{account_id}"  # Remove once get_accounts has been implemented
     return make_response(
         jsonify(account.serialize()), status.HTTP_200_OK, {"Location": location_url}
     )
@@ -101,7 +101,7 @@ def update_accounts(account_id):
     account = Account.find(account_id)
     if account is None:
         abort(status.HTTP_404_NOT_FOUND, f"Account with {account_id} not available")
-    account.deserialize(request.get_json()) # Parse data from PUT requests
+    account.deserialize(request.get_json())  # Parse data from PUT requests
     account.update()
     location_url = f"/accounts/{account_id}"  # Remove once get_accounts has been implemented
     return make_response(
@@ -112,11 +112,12 @@ def update_accounts(account_id):
 # DELETE AN ACCOUNT
 ######################################################################
 
+
 @app.route("/accounts/<int:account_id>", methods=["DELETE"])
 def delete_accounts(account_id):
     account = Account.find(account_id)
     if account is None:
-        abort(status.HTTP_404_NOT_FOUND, f"Account with {account_id} not available")    
+        abort(status.HTTP_404_NOT_FOUND, f"Account with {account_id} not available")
     account.delete()
     location_url = f"/accounts/{account_id}"  # Remove once get_accounts has been implemented
     return make_response(
@@ -126,6 +127,7 @@ def delete_accounts(account_id):
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
 ######################################################################
+
 
 def check_content_type(media_type):
     """Checks that the media type is correct"""
