@@ -65,7 +65,7 @@ def create_accounts():
 @app.route("/accounts", methods=["GET"])
 def list_accounts():
     accounts = Account().all()
-    data = [account.serialize() for account in accounts] 
+    data = [account.serialize() for account in accounts]
     location_url = "/accounts"
     return make_response(
         jsonify(data), status.HTTP_200_OK, {"Location": location_url}
