@@ -135,26 +135,23 @@ class TestAccountService(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         data = resp.get_json()
         self.assertEqual(data["name"], account.name)
-    
-        # ADD YOUR TEST CASES HERE ...
+
+    # ADD YOUR TEST CASES HERE ...
     def test_account_not_found(self):
         resp = self.client.get(
             f"{BASE_URL}/0", content_type="application/json"
         )
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
 
-    
     def test_list_accounts(self):
         test_accounts = self._create_accounts(5)
         response = self.client.get(
             BASE_URL, content_type="application/json"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-        accounts =  response.get_json()        
+        accounts = response.get_json()
         self.assertEqual(len(accounts), len(test_accounts))
 
-    
     def test_update_accounts(self):
         test_account = self._create_accounts(1)[0]
 
@@ -163,12 +160,11 @@ class TestAccountService(TestCase):
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        
+
         account = response.get_json()
-        account['name'] = "Hello World"        
+        account['name'] = "Hello World"
         response = self.client.put(
-            f"{BASE_URL}/{account['id']}", content_type="application/json",
-            json = account
+            f"{BASE_URL}/{account['id']}", content_type="application/json", json=account
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -176,8 +172,8 @@ class TestAccountService(TestCase):
         self.assertEqual(updated_account['name'], account['name'])
 
     def test_delete_accounts(self):
-        test_account = self._create_accounts(1)[0]        
-        
+        test_account = self._create_accounts(1)[0]
+
         response = self.client.get(
             f"{BASE_URL}/{test_account.id}", content_type="application/json"
         )
@@ -193,15 +189,13 @@ class TestAccountService(TestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-
     ######################################################################
     #  SECURE   T E S T   C A S E S
     ######################################################################
 
-
     def test_security_headers(self):
         """It should return security headers"""
-        response = self.client.get("/", environ_overrides = HTTPS_ENVIRON)
+        response = self.client.get("/", environ_overrides=HTTPS_ENVIRON)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         headers = {
             'X-Frame-Options': 'SAMEORIGIN',
@@ -211,13 +205,10 @@ class TestAccountService(TestCase):
         }
         for key, value in headers.items():
             self.assertEqual(response.headers.get(key), value)
-    
+
     def test_cors_security(self):
         """It should return a CORS header"""
         response = self.client.get("/", environ_overrides=HTTPS_ENVIRON)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        #Check for CORS header
+        # Check for CORS header
         self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*')
-       
-
-

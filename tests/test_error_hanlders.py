@@ -1,7 +1,7 @@
 import os
 import logging
 from unittest import TestCase
-from tests.factories import AccountFactory
+# from tests.factories import AccountFactory
 from service.common import status  # HTTP Status Codes
 from service.models import db, Account, init_db
 from service.routes import app
@@ -40,11 +40,11 @@ class TestErrorHanlders(TestCase):
     def tearDown(self):
         """Clean up after each test"""
         db.session.remove()
-    
+
     ###################################################################
     #  ERROR HANLDER   T E S T   C A S E S
     ######################################################################
-    
+
     def test_data_validation_error(self):
         """It should trigger DataValidationError and return 400"""
         # Send incomplete payload to trigger KeyError inside deserialize
@@ -59,7 +59,6 @@ class TestErrorHanlders(TestCase):
         response = self.client.put(BASE_URL)  # PUT without /<id> will trigger 405
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-                # POST is allowed, but PUT without an account ID is not (on /accounts)
+        # POST is allowed, but PUT without an account ID is not (on /accounts)
         response = self.client.delete(BASE_URL)  # PUT without /<id> will trigger 405
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-       
